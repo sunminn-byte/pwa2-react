@@ -1,0 +1,99 @@
+import { useState } from 'react';
+import './App.css';
+
+function App() {
+  // br------------------------------------------
+  // br------------------------------------------
+  const title = '제목';
+
+  const titleStyle = {
+    color: 'blue',
+    fontSize: '1rem'
+  };
+  // br------------------------------------------
+  // br------------------------------------------
+  const [count, setCount] = useState(0);
+
+  const decrementCount = () => {
+    setCount((prev) => {
+      if(prev > 0) {
+        return prev -1;
+      } else {
+        return 0;
+      }
+    });
+  }
+
+  const incrementCount = () => {
+    setCount((prev) => prev + 1);
+  }
+  // br------------------------------------------
+  // br------------------------------------------
+  const [account, setAccount] = useState('');
+  // br------------------------------------------
+  // br------------------------------------------
+  const [userInfo, setUserInfo] = useState({
+    name: '홍길동',
+    age: 20,
+    gender: 'M'
+  });
+
+  // 기존State !== 새State 일때만, 리랜더링이 일어난다.
+  const addAge = () => {
+    const copy = {...userInfo};
+    copy.age += 1;
+    setUserInfo(copy);
+  }
+  // br------------------------------------------
+  // br------------------------------------------
+  // 조건부 렌더링용
+  const [flg, setFlg] = useState(true);
+  // br------------------------------------------
+  // br------------------------------------------
+
+  return (
+    <>
+      {/* 조건부렌더링 해봅시다. */}
+      { count > 9 ? count : null }
+      { count >= 10 && <h1>{count}</h1> }
+      <br />
+      {/* 조건부 렌더링 */}
+      <button type="button" onClick={() => { setFlg(!flg) }}>Flg</button>
+      {/* 삼항연산자 : { 조건식 ? 참일때 : 거짓일때 } */}
+      {/* { flg ? <h1>조건부 렌더링</h1> : null } */}
+      {/* 1. flg를 실행 > 2. true면 h1을 실행 / false면 h1을 실행하지 않음 */}
+      { flg && <h1>조건부 렌더링</h1> }
+      <br />
+      <br />
+
+
+      <span>{`${userInfo.name} : ${userInfo.age} : ${userInfo.gender}`}</span>
+      <button type="button" onClick={addAge}>나이 증가</button>
+      <br />
+      <br />
+
+
+      <input type="text" value={account} onChange={(e) => { setAccount(e.target.value) }}/>
+      <p>{account}</p>
+      <br />
+      <br />
+
+
+      <p>{count}</p>
+      {/* <button type="button" onClick={() => {setCount((prev) => prev + 1)}}>+</button> */}
+      <button type="button" onClick={decrementCount}>-</button>
+      <button type="button" onClick={incrementCount}>+</button>
+      <br />
+      <br />
+
+
+      {/* <h1 style="color: red; font-size: 2rem;"></h1> */}
+      <h1 className="title" style={{color: 'red', fontSize: '3rem'}}>{title}</h1>
+      <h1 style={titleStyle}>{title}</h1>
+      <br />
+      <br />
+    </>
+  )
+}
+
+export default App;
